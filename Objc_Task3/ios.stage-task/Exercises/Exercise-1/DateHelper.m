@@ -46,22 +46,11 @@
 #pragma mark - Fourth
 
 - (BOOL)isDateInThisWeek:(NSDate *)date {
-    NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierCoptic];
-    NSDate *weekBegin;
-    NSDate *weekEnd;
-    NSTimeInterval interval;
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSInteger dateWeek = [calendar component:NSCalendarUnitWeekOfYear fromDate:date];
+    NSInteger currentWeek = [calendar component:NSCalendarUnitWeekOfYear fromDate:[NSDate now]];
     
-    [calendar rangeOfUnit:NSCalendarUnitWeekOfMonth
-                startDate:&weekBegin
-                 interval:&interval
-                  forDate:[NSDate now]];
-    
-    weekEnd = [weekBegin dateByAddingTimeInterval:interval-1];
-    
-    if (date > weekBegin && date < weekEnd) {
-        return YES;
-    }
-    return NO;
+    return dateWeek == currentWeek ? YES : NO;
 }
 
 @end
